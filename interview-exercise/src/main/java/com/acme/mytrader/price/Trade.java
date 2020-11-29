@@ -1,5 +1,7 @@
 package com.acme.mytrader.price;
 
+import java.util.Objects;
+
 public class Trade {
 
 	private final int quantity;
@@ -20,6 +22,25 @@ public class Trade {
 	}
 	public String getSecurity() {
 		return security;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(security, quantity, executionPrice);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!(obj instanceof Trade)) 
+			return false;
+		Trade other = (Trade) obj;
+		if (Double.doubleToLongBits(executionPrice) != Double.doubleToLongBits(other.executionPrice) 
+					|| quantity != other.quantity 
+					|| (security != null && other.security != null && !security.equals(other.security)))
+			return false;
+		return true;
 	}
 	
 	
